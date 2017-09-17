@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="successfullyAdded" class="alert alert-success" role="alert">
+          Successfully added expense details.
+        </div>
+        <h4 class="card-title">Add New Expense</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Fill in the following details and click add button</h6>
+        <form *ngIf="categoriesLoaded" [formGroup]="addExpenseForm" (ngSubmit)="addExpense()">
+          <md-select placeholder="Select category" formControlName="category">
+            <md-option *ngFor="let cat of categories" [value]="cat">
+              {{ cat }}
+            </md-option>
+          </md-select>
+          <md-error *ngIf="categoryFormControl.touched && categoryFormControl.hasError('required')">
+            Please select the category
+          </md-error>
+          <md-form-field class="w-100 mt-3">
+              <input mdInput formControlName="amount" placeholder="Enter amount" value="" type="number">
+              <md-error *ngIf="amountFormControl.hasError('required')">
+                Please enter the amount
+              </md-error>
+          </md-form-field>
+          <md-form-field class="w-100">
+              <textarea mdInput formControlName="description" placeholder="Enter optional description" value="" type="password"></textarea>
+          </md-form-field>
+          <button md-raised-button type="submit" [disabled]="addButtonDisabled">{{addButtonText}}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <div *ngIf="successfullyAdded" class="alert alert-success" role="alert">
+                Successfully added new category.
+              </div>
+              <h4 class="card-title">Add New Category</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Fill in the following details and click add button</h6>
+              <form *ngIf="showAddCategoryForm" [formGroup]="addCategoryForm" (ngSubmit)="addCategory()">
+                <md-form-field class="w-100 mb-3">
+                    <input mdInput formControlName="categoryname" placeholder="Enter category name" value="" type="text">
+                    <md-error *ngIf="categoryNameFormControl.hasError('required')">
+                      Please enter the category name
+                    </md-error>
+                </md-form-field>
+                <button md-raised-button type="submit" [disabled]="addButtonDisabled">{{addButtonText}}</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

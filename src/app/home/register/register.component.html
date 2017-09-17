@@ -1,0 +1,33 @@
+<div class="row justify-content-center" style="margin:10% auto">
+    <div class="col-xs-12 col-md-8 align-self-center">
+      <div *ngIf="showMessage" class="alert alert-{{messageType}} text-center" role="alert">
+          {{ message }}
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">
+            <button mdTooltip="Go back to home" mdTooltipPosition="right" routerLink="/" md-mini-fab>
+              <md-icon>keyboard_backspace</md-icon>
+            </button>
+            <h5 class="text-center">
+              Register for a new account
+            </h5>
+          </div>
+          <div class="card-text text-center">
+            <form [formGroup]="registerForm" (ngSubmit)="addUser()">
+              <md-form-field class="w-100">
+                  <input mdInput formControlName="username" placeholder="Enter your name" value="" name="name">
+              </md-form-field>
+              <md-form-field class="w-100">
+                  <input mdInput formControlName="email" placeholder="Enter your email" value="" name="email">
+              </md-form-field>
+              <md-form-field class="w-100">
+                  <input mdInput formControlName="password" placeholder="Enter your password" value="" name="password" type="password">
+              </md-form-field>
+              <button md-raised-button [disabled]="disableRegisterButton">{{ registerButtonText }}</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
