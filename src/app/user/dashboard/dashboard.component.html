@@ -9,7 +9,7 @@
           </p>
         </div>
     </div>
-    <div class="col-sm-6" *ngIf="!isNewUser">
+    <div class="col-sm-12" *ngIf="!isNewUser">
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Category Wise Piechart</h4>
@@ -20,6 +20,31 @@
               [labels]="true"
               (select) = "onSelect($event)">
             </ngx-charts-pie-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12" *ngIf="!isNewUser">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">
+            <h4 class="d-inline-flex">Month Wise Chart</h4>
+            <div class="float-right" style="margin-top:-20px">
+              <md-select floatPlaceholder="never" style="margin-right: 15px;" placeholder="Start date">
+                  <md-option *ngFor="let date of dates" [value]="date">
+                    {{ date }}
+                  </md-option>
+              </md-select>
+              <span style="margin-right: 15px;"> to </span>
+              <md-select floatPlaceholder="never"  placeholder="End date">
+                  <md-option *ngFor="let date of dates" [value]="date">
+                      {{ date }}
+                  </md-option>
+              </md-select>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-center">Coming soon...</h4>
           </div>
         </div>
       </div>
