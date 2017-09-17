@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { error } from 'util';
 import { AuthService } from '../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +12,14 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
-    'email': new FormControl(),
-    'password': new FormControl()
+    'email': new FormControl('', [Validators.required, Validators.email]),
+    'password': new FormControl('', [Validators.required])
   });
 
   credentials: any;
-  logInSuccess = true;
+  logInFailed = false;
+  logInButtonText = 'Login';
+  logInButtonDisabled = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -26,23 +28,29 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.credentials = {
-      email: this.loginForm.get('email').value,
-      password: this.loginForm.get('password').value
-    };
+    if (this.loginForm.valid) {
+      this.logInButtonText = 'Loging you in...';
+      this.logInButtonDisabled = true;
+      this.credentials = {
+        email: this.loginForm.get('email').value,
+        password: this.loginForm.get('password').value
+      };
 
-    this.authService.logIn(this.credentials).subscribe(
-      response => {
-        if (response) {
-          this.logInSuccess = true;
-          this.router.navigate(['/user/dashboard']);
-        } else {
-          this.logInSuccess = false;
+      this.authService.logIn(this.credentials).subscribe(
+        response => {
+          if (response) {
+            this.logInFailed = false;
+            this.router.navigate(['/user/dashboard']);
+          } else {
+            this.logInFailed = true;
+          }
+        },
+        error => {
+          this.logInFailed = true;
+          this.logInButtonText = 'Login';
+          this.logInButtonDisabled = false;
         }
-      },
-      error => {
-        this.logInSuccess = false;
-      }
-    );
+      );
+    }
   }
 }
